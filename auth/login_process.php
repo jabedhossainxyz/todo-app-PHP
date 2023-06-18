@@ -5,24 +5,20 @@ if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Hash and salt the password if necessary
-    // Modify the SQL query to check hashed/salted password if applicable
-
-    // Use prepared statement to prevent SQL injection
-    $stmt = $conn->prepare("SELECT * FROM `to-do_list`.`users` WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $username, $password);
+    $stmt = $conn->prepare("SELECT * FROM `to-do_list`.`users` WHERE username = :username AND password = :password");
+    $stmt->bindValue(':username', $username);
+    $stmt->bindValue(':password', $password);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($result->num_rows > 0) {
-        // Login successful
-        // Redirect the user to the desired page or perform any additional actions
+    if (count($result) > 0) {
+        session_start();
+        $_SESSION['username'] = $username; // Store the username in the session
         header("Location: ../view/dashboard.php");
         exit;
     } else {
-        // Login failed
-        // Redirect the user back to the login page with an error message
         header("Location: login.php?error=Invalid username or password");
         exit;
     }
 }
+?>
