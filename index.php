@@ -14,7 +14,7 @@ require 'connect.php';
 
 <body>
         <ul class="navbar">
-                <li><a href="#">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="auth\login.php">Login</a></li>
                 <li><a href="auth\register.php">Registration</a></li>
         </ul>
