@@ -1,7 +1,7 @@
 <?php
 
 if(isset($_POST['id'])){
-    require '../connect.php';
+    require '../database/connect.php';
 
     $id = $_POST['id'];
 

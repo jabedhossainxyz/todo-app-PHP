@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_POST['title'])) {
-    require '../connect.php';
+    require '../database/connect.php';
 
     $title = $_POST['title'];
 
