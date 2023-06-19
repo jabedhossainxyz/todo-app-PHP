@@ -13,7 +13,7 @@ if (isset($_POST['login'])) {
 
     if (count($result) > 0) {
         session_start();
-        $_SESSION['username'] = $username; // Store the username in the session
+        $_SESSION['username'] = $username; 
         header("Location: ../view/dashboard.php");
         exit;
     } else {
