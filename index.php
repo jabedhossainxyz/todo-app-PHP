@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php include './database/connect.php'?>
+
 <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -89,7 +90,8 @@ $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
                                                 const h2 = $(this).next();
                                                 if (data === '1') {
                                                         h2.removeClass(
-                                                                'checked');
+                                                                'checked'
+                                                                );
                                                 } else {
                                                         h2.addClass('checked');
                                                 }
