@@ -31,3 +31,4 @@ if (isset($_POST['id'])) {
 } else {
     header("Location: ../index.php?mess=error");
 }
+?>

@@ -11,39 +11,6 @@ if (!isset($_SESSION['username'])) {
     header("Location: ../auth/login.php");
     exit;
 }
-function completeTask($conn, $taskId)
-{
-    $stmt = $conn->prepare("INSERT INTO `to-do_list`.`completed_task` (task_id,title, date_time)
-                            SELECT task_id, title,date_time FROM `to-do_list`.`todos` WHERE id = ?");
-    $stmt->execute([$taskId]);
-}
-
-function deleteTask($conn, $taskId)
-{
-    $stmt = $conn->prepare("INSERT INTO `to-do_list`.`deleted_task` (task_id, title, date_time)
-                            SELECT task_id, title, date_time FROM `to-do_list`.`todos` WHERE id = ?");
-    $stmt->execute([$taskId]);
-}
-
-if (isset($_POST['complete'])) {
-    $taskId = $_POST['complete'];
-
-    if (!empty($taskId)) {
-        completeTask($conn, $taskId);
-        $stmt = $conn->prepare("DELETE FROM `to-do_list`.`todos` WHERE id = ?");
-        $stmt->execute([$taskId]);
-    }
-}
-
-if (isset($_POST['delete'])) {
-    $taskId = $_POST['delete'];
-
-    if (!empty($taskId)) {
-        deleteTask($conn, $taskId);
-        $stmt = $conn->prepare("DELETE FROM `to-do_list`.`todos` WHERE id = ?");
-        $stmt->execute([$taskId]);
-    }
-}
 
 if (isset($_POST['title'])) {
         $title = $_POST['title'];
