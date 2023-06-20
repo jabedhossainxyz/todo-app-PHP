@@ -34,6 +34,15 @@
                 table.dataTable tbody tr:nth-child(even) {
                         background-color: #f9f9f9;
                 }
+
+                .dataTables_paginate {
+                        text-align: center;
+                }
+
+                .dataTables_paginate span {
+                        padding: 5px;
+                        cursor: pointer;
+                }
         </style>
 </head>
 
@@ -79,7 +88,7 @@
                                         <tbody>
                                                 <?php while ($todo = $todos->fetch(PDO::FETCH_ASSOC)) { ?>
                                                         <tr>
-                                                                <td style="text-align: center;">
+                                                                <td>
                                                                         <?php echo $todo['title'] ?>
                                                                 </td>
                                                                 <td>
@@ -105,7 +114,15 @@
 
         <script>
                 $(document).ready(function () {
-                        $('#todo-table').DataTable();
+                        $('#todo-table').DataTable({
+                                "pagingType": "full_numbers",
+                                "language": {
+                                        "paginate": {
+                                                "previous": "Previous",
+                                                "next": "Next"
+                                        }
+                                }
+                        });
 
                         $('.remove-to-do').click(function () {
                                 const id = $(this).attr('id');
@@ -114,7 +131,7 @@
                                         id: id
                                 }, function (data) {
                                         if (data) {
-                                                $(this).parent().parent().hide(600);
+                                                $(this).closest("tr").hide(600);
                                         }
                                 });
                         });
