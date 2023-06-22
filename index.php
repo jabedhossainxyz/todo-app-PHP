@@ -10,6 +10,12 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" href="./css/style.css">
         <style>
+                body {
+                        background: #34495e;
+                        padding: 2px;
+                        margin: 10px;
+                }
+
                 table.dataTable {
                         border-collapse: collapse;
                         border-spacing: 0;
@@ -33,15 +39,6 @@
 
                 table.dataTable tbody tr:nth-child(even) {
                         background-color: #f9f9f9;
-                }
-
-                .dataTables_paginate {
-                        text-align: center;
-                }
-
-                .dataTables_paginate span {
-                        padding: 5px;
-                        cursor: pointer;
                 }
         </style>
 </head>
@@ -92,7 +89,7 @@
                                                                         <?php echo $todo['title'] ?>
                                                                 </td>
                                                                 <td>
-                                                                        <?php echo $todo['date_time'] ?>
+                                                                        <?php echo date('Y-m-d h:i A', strtotime($todo['date_time'])); ?>
                                                                 </td>
                                                                 <td>
                                                                         <span id="<?php echo $todo['id']; ?>"
@@ -112,10 +109,11 @@
         <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
 
+
         <script>
                 $(document).ready(function () {
                         $('#todo-table').DataTable({
-                                "pagingType": "full_numbers",
+                                "paging": false, // Disable pagination
                                 "language": {
                                         "paginate": {
                                                 "previous": "Previous",
@@ -158,6 +156,7 @@
                         });
                 });
         </script>
+
 </body>
 
 </html>

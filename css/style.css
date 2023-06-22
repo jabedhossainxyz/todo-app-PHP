@@ -1,10 +1,10 @@
 body {
         background: #34495e;
+        padding: 15px;
+        margin: 15px;
 }
 
 * {
-        padding: 0px;
-        margin: 0px;
         box-sizing: border-box;
 }
 
@@ -38,10 +38,10 @@ ul.navbar li a:hover {
 
 .main-section {
         background: transparent;
-        max-width: 500px;
-        width: 90%;
-        height: 500px;
-        margin: 30px auto;
+        max-width: 1000px;
+        width: 1000%;
+        height: 1000px;
+        margin: 50px auto;
         border-radius: 10px;
 }
 
@@ -49,7 +49,7 @@ ul.navbar li a:hover {
         width: 100%;
         background: #fff;
         margin: 0px auto;
-        padding: 10px;
+        padding: 20px;
         border-radius: 5px;
 }
 
