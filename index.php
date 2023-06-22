@@ -11,9 +11,25 @@
         <link rel="stylesheet" href="./css/style.css">
         <style>
                 body {
-                        background: #34495e;
+                        background: #68a7ac9e;
                         padding: 2px;
                         margin: 10px;
+                }
+
+                .main-section {
+                        width: 100%;
+                }
+
+                ul.navbar {
+                        list-style-type: none;
+                        margin: 0;
+                        padding: 0;
+                        overflow: hidden;
+                        background-color: #05697cdb;
+                }
+
+                .show-todo-section table {
+                        width: 100%;
                 }
 
                 table.dataTable {
@@ -31,10 +47,11 @@
 
                 table.dataTable td,
                 table.dataTable th {
-                        padding: 8px;
-                        line-height: 1.5;
+                        padding: 12px;
+                        line-height: 2;
                         vertical-align: middle;
                         border-top: 1px solid #dee2e6;
+                        text-align: center;
                 }
 
                 table.dataTable tbody tr:nth-child(even) {
@@ -78,7 +95,10 @@
                                         <thead>
                                                 <tr>
                                                         <th>Title</th>
-                                                        <th>Date Created</th>
+                                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="todo-table"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Date Created: activate to sort column descending"
+                                                                style="width: 150px;" aria-sort="ascending">Date Created</th>
                                                         <th>Action</th>
                                                 </tr>
                                         </thead>
@@ -141,15 +161,23 @@
                                         id: id
                                 }, function (data) {
                                         if (data !== 'error') {
-                                                const row = $(this).closest("tr");
-                                                const title = row.find("td:first").text();
+                                                const row = $(this).closest(
+                                                        "tr");
+                                                const title = row.find(
+                                                        "td:first")
+                                                        .text();
 
                                                 if (data === '1') {
                                                         row.addClass('done');
-                                                        row.find("td:first").html('<del>' + title + '</del>');
+                                                        row.find("td:first")
+                                                                .html('<del>' +
+                                                                        title +
+                                                                        '</del>'
+                                                                );
                                                 } else {
                                                         row.removeClass('done');
-                                                        row.find("td:first").text(title);
+                                                        row.find("td:first")
+                                                                .text(title);
                                                 }
                                         }
                                 });

@@ -1,24 +1,13 @@
-body {
-        background: #34495e;
-        padding: 15px;
-        margin: 15px;
-}
-
 * {
         box-sizing: border-box;
 }
+
 
 .welcome-section h2 {
         font-size: 24px;
 }
 
-ul.navbar {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background-color: #333;
-}
+
 
 ul.navbar li {
         float: left;
@@ -41,16 +30,18 @@ ul.navbar li a:hover {
         max-width: 1000px;
         width: 1000%;
         height: 1000px;
-        margin: 50px auto;
+        margin: 0 auto;
         border-radius: 10px;
 }
 
 .add-section {
-        width: 100%;
-        background: #fff;
+        width: 950px;
+        background: hsla(0, 0%, 100%, 0.568);
         margin: 0px auto;
-        padding: 20px;
-        border-radius: 5px;
+        padding: 10px;
+        border-radius: 10px;
+        margin-left: -10px;
+        margin-top: 20px;
 }
 
 .add-section input {
@@ -66,18 +57,19 @@ ul.navbar li a:hover {
 
 .add-section button {
         display: block;
-        width: 95%;
+        width: 35%;
         height: 40px;
         margin: 0px auto;
         border: none;
         outline: none;
-        background: #0088FF;
+        background: #0087ffcf;
         color: #fff;
         font-family: sans-serif;
         font-size: 16px;
         border-radius: 5px;
         cursor: pointer;
 }
+
 
 .add-section button:hover {
         box-shadow: 0 2px 2px 0 #ccc, 0 2px 3px 0 #ccc;
@@ -103,11 +95,12 @@ ul.navbar li a:hover {
 }
 
 .show-todo-section {
-        width: 100%;
-        background: #fff;
+        width: 950px;
+        background: hsl(0, 0%, 100%);
         margin: 30px auto;
         padding: 10px;
-        border-radius: 5px;
+        border-radius: 10px;
+        margin-left: -10px;
 }
 
 .todo-item {
@@ -115,7 +108,7 @@ ul.navbar li a:hover {
         margin: 10px auto;
         padding: 20px 10px;
         box-shadow: 0 4px 8px 0 #ccc, 0 6px 20px 0 #ccc;
-        border-radius: 5px;
+        border-radius: 10px;
 }
 
 .todo-item h2 {
