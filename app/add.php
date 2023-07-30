@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_POST['title'])) {
     require '../database/connect.php';
 
@@ -7,21 +6,20 @@ if (isset($_POST['title'])) {
 
     if (empty($title)) {
         header("Location: ../index.php?mess=error");
+        exit();
     } else {
-        $stmt = $conn->prepare("INSERT INTO `to-do_list`.`todos`(title) VALUES(?)");
+        $stmt = $conn->prepare("INSERT INTO `to-do_list`.`todos`(title, date_time) VALUES(?, NOW())");
         $res = $stmt->execute([$title]);
 
         if ($res) {
             header("Location: ../index.php?mess=success");
+            exit();
         } else {
             header("Location: ../index.php");
+            exit();
         }
-        $conn = null;
-        exit();
     }
 } else {
     header("Location: ../index.php?mess=error");
+    exit();
 }
-$title = $_POST['title'];
-$date_time = date('Y-m-d H:i:s');
-?>

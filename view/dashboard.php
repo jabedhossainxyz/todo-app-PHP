@@ -1,29 +1,46 @@
 <?php
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 session_start();
-
-include '../database/connect.php';
 
 if (!isset($_SESSION['username'])) {
     header("Location: ../auth/login.php");
     exit;
 }
 
-if (isset($_POST['title'])) {
-        $title = $_POST['title'];
+include '../database/connect.php';
 
-        if (!empty($title)) {
-                $stmt = $conn->prepare("INSERT INTO `to-do_list`.`todos` (title, date_time) VALUES (?, 0, NOW())");
-                $stmt->execute([$title]);
-                header("Location: dashboard.php");
-                exit;
-        }
+if (isset($_POST['complete'])) {
+    $taskId = $_POST['complete'];
+    $stmt = $conn->prepare("UPDATE `to-do_list`.`todos` SET checked = 1 WHERE id = ?");
+    $stmt->execute([$taskId]);
+    header("Location: dashboard.php");
+    exit();
 }
 
+if (isset($_POST['delete'])) {
+    $taskId = $_POST['delete'];
+    $stmt = $conn->prepare("DELETE FROM `to-do_list`.`todos` WHERE id = ?");
+    $stmt->execute([$taskId]);
+    header("Location: dashboard.php");
+    exit();
+}
+
+if (isset($_POST['title'])) {
+    $title = $_POST['title'];
+
+    if (!empty($title)) {
+        $stmt = $conn->prepare("INSERT INTO `to-do_list`.`todos` (title, date_time) VALUES (?, NOW())");
+        $stmt->execute([$title]);
+        header("Location: dashboard.php");
+        exit;
+    }
+}
+
+$todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,17 +95,17 @@ if (isset($_POST['title'])) {
         </div>
         <div class="main-section">
                 <div class="add-section">
-                        <form action="../app/add.php" method="POST" autocomplete="off">
+                        <form action="" method="POST" autocomplete="off">
                                 <?php if (isset($_GET['mess']) && $_GET['mess'] == 'error') {?>
                                 <input type="text" name="title" style="border-color: #ff6666"
                                         placeholder="This field is required" />
                                 <button type="submit">Add &nbsp; <span>&#43;</span></button>
-
                                 <?php } else {?>
                                 <input type="text" name="title" placeholder="What do you need to do?" />
                                 <button type="submit">Add &nbsp; <span>&#43;</span></button>
                                 <?php }?>
                         </form>
+
                 </div>
                 <?php
 $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
@@ -129,33 +146,16 @@ $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
                         <?php while ($todo = $todos->fetch(PDO::FETCH_ASSOC)) {?>
 
                         <div class="todo-item">
-
-                                <form class="task-form" action="" method="POST">
-                                        <span>
-                                                <button type="submit" name="complete"
-                                                        value="<?php echo $todo['id']; ?>">Complete</button>
-                                                <button type="submit" name="delete"
-                                                        value="<?php echo $todo['id']; ?>">Delete</button>
-                                        </span>
-                                </form>
-
                                 <?php if ($todo['checked']) {?>
                                 <input type="checkbox" class="check-box" data-todo-id="<?php echo $todo['id']; ?>"
                                         checked />
-                                <h2 class="checked">
-                                        <?php echo $todo['title'] ?>
-                                </h2>
+                                <h2 class="checked"><?php echo $todo['title']; ?></h2>
                                 <?php } else {?>
                                 <input type="checkbox" data-todo-id="<?php echo $todo['id']; ?>" class="check-box" />
-                                <h2>
-                                        <?php echo $todo['title'] ?>
-                                </h2>
+                                <h2><?php echo $todo['title']; ?></h2>
                                 <?php }?>
                                 <br>
-
-                                <small>created:
-                                        <?php echo $todo['date_time'] ?>
-                                </small>
+                                <small>created: <?php echo $todo['date_time']; ?></small>
                         </div>
                         <?php }?>
                 </div>
@@ -169,35 +169,38 @@ $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
                         const id = $(this).attr('id');
 
                         $.post("../app/remove.php", {
-                                        id: id
-                                },
-                                (data) => {
-                                        if (data) {
-                                                $(this).parent().hide(600);
-                                        }
+                                id: id
+                        }, function(data) {
+                                if (data) {
+                                        $(this).parent().hide(600);
                                 }
-                        );
+                        });
                 });
 
                 $(".check-box").click(function(e) {
                         const id = $(this).attr('data-todo-id');
+                        const isChecked = $(this).prop('checked') ? 1 : 0;
 
                         $.post('../app/check.php', {
-                                        id: id
-                                },
-                                (data) => {
-                                        if (data != 'error') {
-                                                const h2 = $(this).next();
-                                                if (data === '1') {
-                                                        h2.removeClass(
-                                                                'checked'
-                                                        );
-                                                } else {
-                                                        h2.addClass('checked');
-                                                }
+                                id: id,
+                                checked: isChecked
+                        }, function(data) {
+                                if (data === 'success') {
+                                        const h2 = $(this).next();
+                                        if (isChecked) {
+                                                h2.addClass('checked');
+                                        } else {
+                                                h2.removeClass(
+                                                        'checked');
                                         }
+                                } else {
+                                        console.error('Error during AJAX call to check.php:',
+                                                data);
                                 }
-                        );
+                        }).fail(function(xhr, status, error) {
+                                console.error('AJAX request to check.php failed:',
+                                        error);
+                        });
                 });
         });
         </script>
