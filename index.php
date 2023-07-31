@@ -1,19 +1,5 @@
 <?php
-session_start();
-
 require './database/connect.php';
-
-// Check if 'username' key exists in the $_SESSION array
-if (isset($_SESSION['username'])) {
-        // If the 'username' key is set, fetch the user's todos and proceed to show the index page
-        $username = $_SESSION['username'];
-        $todos = $conn->prepare("SELECT * FROM todos WHERE checked = 0 AND created_by = ? ORDER BY id DESC");
-        $todos->execute([$username]);
-} else {
-        // If the 'username' key is not set, redirect to the login page
-        header("Location: auth/login.php");
-        exit;
-}
 ?>
 
 <!DOCTYPE html>
