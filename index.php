@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include './database/connect.php' ?>
+<?php require './database/connect.php'?>
 
 <head>
         <meta charset="UTF-8">
@@ -10,53 +10,53 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" href="./css/style.css">
         <style>
-                body {
-                        background: #68a7ac9e;
-                        padding: 2px;
-                        margin: 10px;
-                }
+        body {
+                background: #68a7ac9e;
+                padding: 2px;
+                margin: 10px;
+        }
 
-                .main-section {
-                        width: 100%;
-                }
+        .main-section {
+                width: 100%;
+        }
 
-                ul.navbar {
-                        list-style-type: none;
-                        margin: 0;
-                        padding: 0;
-                        overflow: hidden;
-                        background-color: #05697cdb;
-                }
+        ul.navbar {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #05697cdb;
+        }
 
-                .show-todo-section table {
-                        width: 100%;
-                }
+        .show-todo-section table {
+                width: 100%;
+        }
 
-                table.dataTable {
-                        border-collapse: collapse;
-                        border-spacing: 0;
-                        width: 100%;
-                        border: 1px solid #dee2e6;
-                }
+        table.dataTable {
+                border-collapse: collapse;
+                border-spacing: 0;
+                width: 100%;
+                border: 1px solid #dee2e6;
+        }
 
-                table.dataTable thead th,
-                table.dataTable tfoot th {
-                        font-weight: bold;
-                        border: 1px solid #dee2e6;
-                }
+        table.dataTable thead th,
+        table.dataTable tfoot th {
+                font-weight: bold;
+                border: 1px solid #dee2e6;
+        }
 
-                table.dataTable td,
-                table.dataTable th {
-                        padding: 12px;
-                        line-height: 2;
-                        vertical-align: middle;
-                        border-top: 1px solid #dee2e6;
-                        text-align: center;
-                }
+        table.dataTable td,
+        table.dataTable th {
+                padding: 12px;
+                line-height: 2;
+                vertical-align: middle;
+                border-top: 1px solid #dee2e6;
+                text-align: center;
+        }
 
-                table.dataTable tbody tr:nth-child(even) {
-                        background-color: #f9f9f9;
-                }
+        table.dataTable tbody tr:nth-child(even) {
+                background-color: #f9f9f9;
+        }
         </style>
 </head>
 
@@ -69,59 +69,59 @@
         <div class="main-section">
                 <div class="add-section">
                         <form action="app/add.php" method="POST" autocomplete="off">
-                                <?php if (isset($_GET['mess']) && $_GET['mess'] == 'error') { ?>
-                                        <input type="text" name="title" style="border-color: #ff6666"
-                                                placeholder="This field is required" />
-                                        <button type="submit">Add &nbsp; <span>&#43;</span></button>
-                                <?php } else { ?>
-                                        <input type="text" name="title" placeholder="What do you need to do?" />
-                                        <button type="submit">Add &nbsp; <span>&#43;</span></button>
-                                <?php } ?>
+                                <?php if (isset($_GET['mess']) && $_GET['mess'] == 'error') {?>
+                                <input type="text" name="title" style="border-color: #ff6666"
+                                        placeholder="This field is required" />
+                                <button type="submit">Add &nbsp; <span>&#43;</span></button>
+                                <?php } else {?>
+                                <input type="text" name="title" placeholder="What do you need to do?" />
+                                <button type="submit">Add &nbsp; <span>&#43;</span></button>
+                                <?php }?>
                         </form>
                 </div>
                 <?php
-                $todos = $conn->query("SELECT * FROM todos WHERE checked = 0 ORDER BY id DESC");
-                ?>
+$todos = $conn->query("SELECT * FROM todos WHERE checked = 0 ORDER BY id DESC");
+?>
                 <div class="show-todo-section">
-                        <?php if ($todos->rowCount() <= 0) { ?>
-                                <div class="todo-item">
-                                        <div class="empty">
-                                                <img src="img/f.png" width="100%" />
-                                                <img src="img/Ellipsis.gif" width="80px">
-                                        </div>
+                        <?php if ($todos->rowCount() <= 0) {?>
+                        <div class="todo-item">
+                                <div class="empty">
+                                        <img src="img/f.png" width="100%" />
+                                        <img src="img/Ellipsis.gif" width="80px">
                                 </div>
-                        <?php } else { ?>
-                                <table id="todo-table" class="table table-striped">
-                                        <thead>
-                                                <tr>
-                                                        <th>Title</th>
-                                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="todo-table"
-                                                                rowspan="1" colspan="1"
-                                                                aria-label="Date Created: activate to sort column descending"
-                                                                style="width: 150px;" aria-sort="ascending">Date Created</th>
-                                                        <th>Action</th>
-                                                </tr>
-                                        </thead>
-                                        <tbody>
-                                                <?php while ($todo = $todos->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                        <tr>
-                                                                <td>
-                                                                        <?php echo $todo['title'] ?>
-                                                                </td>
-                                                                <td>
-                                                                        <?php echo date('Y-m-d h:i A', strtotime($todo['date_time'])); ?>
-                                                                </td>
-                                                                <td>
-                                                                        <span id="<?php echo $todo['id']; ?>"
-                                                                                class="remove-to-do">x</span>
-                                                                        <input type="checkbox" data-todo-id="<?php echo $todo['id']; ?>"
-                                                                                class="check-box" />
-                                                                </td>
-                                                        </tr>
-                                                <?php } ?>
-                                        </tbody>
-                                </table>
-                        <?php } ?>
+                        </div>
+                        <?php } else {?>
+                        <table id="todo-table" class="table table-striped">
+                                <thead>
+                                        <tr>
+                                                <th>Title</th>
+                                                <th class="sorting sorting_asc" tabindex="0" aria-controls="todo-table"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Date Created: activate to sort column descending"
+                                                        style="width: 150px;" aria-sort="ascending">Date Created</th>
+                                                <th>Action</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <?php while ($todo = $todos->fetch(PDO::FETCH_ASSOC)) {?>
+                                        <tr>
+                                                <td>
+                                                        <?php echo $todo['title'] ?>
+                                                </td>
+                                                <td>
+                                                        <?php echo date('Y-m-d h:i A', strtotime($todo['date_time'])); ?>
+                                                </td>
+                                                <td>
+                                                        <span id="<?php echo $todo['id']; ?>"
+                                                                class="remove-to-do">x</span>
+                                                        <input type="checkbox" data-todo-id="<?php echo $todo['id']; ?>"
+                                                                class="check-box" />
+                                                </td>
+                                        </tr>
+                                        <?php }?>
+                                </tbody>
+                        </table>
+                        <?php }?>
                 </div>
         </div>
 
@@ -131,58 +131,58 @@
 
 
         <script>
-                $(document).ready(function () {
-                        $('#todo-table').DataTable({
-                                "paging": false, // Disable pagination
-                                "language": {
-                                        "paginate": {
-                                                "previous": "Previous",
-                                                "next": "Next"
+        $(document).ready(function() {
+                $('#todo-table').DataTable({
+                        "paging": false, // Disable pagination
+                        "language": {
+                                "paginate": {
+                                        "previous": "Previous",
+                                        "next": "Next"
+                                }
+                        }
+                });
+
+                $('.remove-to-do').click(function() {
+                        const id = $(this).attr('id');
+                        const row = $(this).closest(
+                        'tr'); // Find the nearest tr element
+
+                        $.post("app/remove.php", {
+                                        id: id
+                                },
+                                function(data) {
+                                        if (data === '1') {
+                                                row.hide(600, function() {
+                                                        // After hiding the row, remove it from the DOM completely
+                                                        row
+                                                .remove();
+                                                });
                                         }
                                 }
-                        });
+                        );
+                });
 
-                        $('.remove-to-do').click(function () {
-                                const id = $(this).attr('id');
+                $(".check-box").click(function(e) {
+                        const id = $(this).attr('data-todo-id');
 
-                                $.post("app/remove.php", {
+                        $.post('app/check.php', {
                                         id: id
-                                }, function (data) {
-                                        if (data) {
-                                                $(this).closest("tr").hide(600);
-                                        }
-                                });
-                        });
-
-                        $(".check-box").click(function (e) {
-                                const id = $(this).attr('data-todo-id');
-
-                                $.post('app/check.php', {
-                                        id: id
-                                }, function (data) {
-                                        if (data !== 'error') {
-                                                const row = $(this).closest(
-                                                        "tr");
-                                                const title = row.find(
-                                                        "td:first")
-                                                        .text();
-
+                                },
+                                (data) => {
+                                        if (data != 'error') {
+                                                const h2 = $(this).next();
                                                 if (data === '1') {
-                                                        row.addClass('done');
-                                                        row.find("td:first")
-                                                                .html('<del>' +
-                                                                        title +
-                                                                        '</del>'
-                                                                );
+                                                        h2.removeClass(
+                                                                'checked'
+                                                        );
                                                 } else {
-                                                        row.removeClass('done');
-                                                        row.find("td:first")
-                                                                .text(title);
+                                                        h2.addClass('checked');
                                                 }
                                         }
-                                });
-                        });
+                                }
+                        );
                 });
+        });
         </script>
 
 </body>

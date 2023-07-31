@@ -1,4 +1,5 @@
 <?php
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -107,9 +108,9 @@ $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
                         </form>
 
                 </div>
-                <?php
-$todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
-?>
+                
+                <?php $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");?>
+
                 <div class="show-todo-section">
                         <?php if ($todos->rowCount() <= 0) {?>
                         <div class="todo-item">
@@ -191,7 +192,8 @@ $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
                                                 h2.addClass('checked');
                                         } else {
                                                 h2.removeClass(
-                                                        'checked');
+                                                        'checked'
+                                                );
                                         }
                                 } else {
                                         console.error('Error during AJAX call to check.php:',

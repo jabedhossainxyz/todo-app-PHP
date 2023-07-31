@@ -8,7 +8,7 @@ if (isset($_POST['id'])) {
     if (empty($id)) {
         echo 0;
     } else {
-        $stmt = $conn->prepare("DELETE FROM `to-do_list`.`todos` WHERE id=?");
+        $stmt = $conn->prepare("DELETE FROM todos WHERE id=?");
         $res = $stmt->execute([$id]);
 
         if ($res) {
@@ -22,5 +22,6 @@ if (isset($_POST['id'])) {
 } else {
     header("Location: ../index.php?mess=error");
 }
+
 
 ?>
