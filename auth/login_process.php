@@ -15,7 +15,7 @@ if (isset($_POST['login'])) {
 
     if (count($result) > 0) {
         $_SESSION['username'] = $username; 
-        header("Location: ../index.php");
+        header("Location: ../view/dashboard.php");
         exit;
     } else {
         header("Location: login.php?error=Invalid username or password");

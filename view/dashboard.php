@@ -1,5 +1,5 @@
 <?php
-require './database/connect.php';
+require '../database/connect.php';
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -11,12 +11,6 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
-session_start();
-
-if (!isset($_SESSION['username'])) {
-    header("Location: ../auth/login.php");
-    exit;
-}
 
 // Assuming you have stored the username of the logged-in user in $_SESSION['username']
 $username = $_SESSION['username'];
