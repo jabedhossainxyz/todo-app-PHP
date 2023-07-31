@@ -1,24 +1,29 @@
 <?php
+session_start();
+
+// Include the database connection file
 require_once '../database/connect.php';
 
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT * FROM `to-do_list`.`users` WHERE username = :username AND password = :password");
-    $stmt->bindValue(':username', $username);
-    $stmt->bindValue(':password', $password);
-    $stmt->execute();
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Hash the password using the defined constants
+    $hashedPassword = password_hash($password, PASSWORD_HASH_ALGO, PASSWORD_HASH_OPTIONS);
 
-    if (count($result) > 0) {
-        session_start();
-        $_SESSION['username'] = $username; 
-        header("Location: ../view/dashboard.php");
+    $stmt = $conn->prepare("SELECT * FROM `to-do_list`.`users` WHERE username = :username");
+    $stmt->bindValue(':username', $username);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($result && password_verify($password, $result['password'])) {
+        // Password is correct, set session and redirect to dashboard
+        $_SESSION['username'] = $username;
+        header("Location: ../index.php");
         exit;
     } else {
+        // Redirect to login page with an error message
         header("Location: login.php?error=Invalid username or password");
         exit;
     }
 }
-?>

@@ -11,13 +11,10 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     echo "PDO Connection failed: " . $e->getMessage();
+    exit; // Stop execution if the connection fails
 }
 
-// Using mysqli
-$conn_mysqli = new mysqli($host, $username, $password, $dbname);
-if ($conn_mysqli->connect_error) {
-    die("mysqli Connection failed: " . $conn_mysqli->connect_error);
-}
-
-
+// Define password hashing algorithm and options
+define('PASSWORD_HASH_ALGO', PASSWORD_DEFAULT);
+define('PASSWORD_HASH_OPTIONS', []);
 ?>
