@@ -1,5 +1,18 @@
 <?php
 require './database/connect.php';
+
+$todos = $conn->query("SELECT * FROM todos WHERE checked = 0 ORDER BY id DESC");
+
+if (isset($_POST['title'])) {
+    $title = $_POST['title'];
+
+    if (!empty($title)) {
+        $stmt = $conn->prepare("INSERT INTO todos (title, date_time) VALUES (?, NOW())");
+        $stmt->execute([$title]);
+        header("Location: index.php");
+        exit;
+    }
+}
 ?>
 
 <!DOCTYPE html>
